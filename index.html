@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Siddh Jhaveri — Mechanical Engineer, Fluids & CFD</title>
+<meta name="description" content="Portfolio of Siddh Jhaveri — mechanical engineering, CFD, and fluid systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+  /* ============ TOKENS ============ */
+  :root{
+    --bg: #0B1220;
+    --surface: #101A2E;
+    --surface-2: #16213A;
+    --line: #26324D;
+    --line-soft: #1B2740;
+    --text: #E9EDF5;
+    --text-dim: #90A0BE;
+    --text-faint: #5B6A88;
+    --amber: #FF6A39;
+    --amber-dim: #6b3a26;
+    --teal: #22D9C4;
+    --teal-dim: #123c38;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --max: 1080px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:var(--font-display); margin:0; font-weight:600; letter-spacing:-0.01em;}
+  p{margin:0 0 1em 0; color:var(--text-dim); max-width:62ch;}
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block; max-width:100%;}
+  ::selection{background:var(--amber); color:#0B1220;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+  }
+
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 28px;}
+  .mono{font-family:var(--font-mono);}
+
+  /* ============ NAV ============ */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(11,18,32,0.78);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .nav-inner{
+    max-width:var(--max); margin:0 auto; padding:16px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-mark{
+    font-family:var(--font-display); font-weight:700; font-size:1rem;
+    display:flex; align-items:baseline; gap:8px;
+  }
+  .nav-mark .dot{color:var(--amber);}
+  .nav-links{display:flex; gap:28px; font-size:0.9rem; color:var(--text-dim);}
+  .nav-links a:hover{color:var(--text);}
+  .nav-links{display:none;}
+  @media (min-width:720px){ .nav-links{display:flex;} }
+
+  /* ============ HERO ============ */
+  .hero{
+    padding:150px 0 0 0;
+    position:relative;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-grid{
+    display:grid; grid-template-columns: 1.15fr 0.85fr; gap:48px;
+    align-items:center;
+    padding-bottom:56px;
+  }
+  @media (max-width:820px){ .hero-grid{grid-template-columns:1fr;} }
+
+  .eyebrow-field{
+    font-family:var(--font-mono); font-size:0.72rem; letter-spacing:0.08em;
+    color:var(--teal); margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem, 5.4vw, 4.1rem);
+    line-height:1.04;
+    color:var(--text);
+  }
+  .hero h1 .accent{ color: var(--amber); }
+  .hero-sub{
+    margin-top:22px; font-size:1.08rem; color:var(--text-dim); max-width:46ch;
+  }
+  .hero-actions{ margin-top:34px; display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    display:inline-block; padding:13px 22px; border-radius:3px;
+    font-size:0.92rem; font-weight:500; font-family:var(--font-body);
+    border:1px solid transparent; cursor:pointer;
+  }
+  .btn-primary{ background:var(--amber); color:#160A05; }
+  .btn-primary:hover{ background:#ff7f52; }
+  .btn-ghost{ border-color:var(--line); color:var(--text); }
+  .btn-ghost:hover{ border-color:var(--text-dim); }
+
+  /* hero diagram */
+  .hero-diagram{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:18px;
+  }
+  .hero-diagram svg{ width:100%; height:auto; }
+  .stream{
+    fill:none; stroke:var(--teal); stroke-width:1.4;
+    stroke-dasharray:6 5;
+    animation:flow 2.4s linear infinite;
+    opacity:0.85;
+  }
+  .stream.n2{ animation-delay:-0.4s; opacity:0.6; }
+  .stream.n3{ animation-delay:-0.9s; opacity:0.45; }
+  @keyframes flow{ to{ stroke-dashoffset:-110; } }
+
+  /* title block strip, styled like an engineering drawing title block */
+  .titleblock{
+    border-top:1px solid var(--line);
+    display:grid; grid-template-columns:repeat(4,1fr);
+  }
+  .titleblock div{
+    padding:16px 28px;
+    border-right:1px solid var(--line);
+    font-family:var(--font-mono); font-size:0.72rem;
+  }
+  .titleblock div:last-child{ border-right:none; }
+  .titleblock .tb-label{ color:var(--text-faint); letter-spacing:0.06em; margin-bottom:5px;}
+  .titleblock .tb-val{ color:var(--text); font-size:0.82rem; }
+  @media (max-width:720px){
+    .titleblock{grid-template-columns:repeat(2,1fr);}
+    .titleblock div:nth-child(2){border-right:none;}
+  }
+
+  /* ============ SECTION SCAFFOLD ============ */
+  section{ padding:90px 0; border-bottom:1px solid var(--line); }
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    gap:24px; margin-bottom:48px; flex-wrap:wrap;
+  }
+  .section-head h2{ font-size:1.9rem; }
+  .section-num{ font-family:var(--font-mono); color:var(--text-faint); font-size:0.85rem; }
+
+  /* ============ ABOUT ============ */
+  .about-grid{ display:grid; grid-template-columns:1.3fr 1fr; gap:56px; }
+  @media (max-width:820px){ .about-grid{grid-template-columns:1fr;} }
+  .about-grid p{ font-size:1.02rem; max-width:none; }
+  .stat-list{ display:flex; flex-direction:column; gap:22px; }
+  .stat{ border-left:2px solid var(--amber); padding-left:16px; }
+  .stat .num{ font-family:var(--font-mono); font-size:1.5rem; color:var(--text); display:block; }
+  .stat .label{ font-size:0.85rem; color:var(--text-dim); }
+
+  /* ============ EXPERIENCE (timeline) ============ */
+  .timeline{ position:relative; padding-left:32px; }
+  .timeline::before{
+    content:""; position:absolute; left:5px; top:6px; bottom:6px; width:1px; background:var(--line);
+  }
+  .tl-item{ position:relative; padding-bottom:40px; }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-item::before{
+    content:""; position:absolute; left:-32px; top:5px; width:11px; height:11px;
+    border-radius:50%; background:var(--bg); border:2px solid var(--teal);
+  }
+  .tl-role{ font-family:var(--font-display); font-size:1.15rem; color:var(--text); }
+  .tl-org{ color:var(--amber); font-size:0.95rem; margin-top:2px; }
+  .tl-meta{ font-family:var(--font-mono); font-size:0.75rem; color:var(--text-faint); margin:6px 0 10px; }
+  .tl-item p{ font-size:0.96rem; }
+
+  /* ============ PROJECTS / CASE STUDIES ============ */
+  .case{
+    display:grid; grid-template-columns:1fr 1fr; gap:52px;
+    padding:56px 0; border-top:1px solid var(--line-soft);
+  }
+  .case:first-of-type{ border-top:none; padding-top:0; }
+  @media (max-width:900px){ .case{grid-template-columns:1fr;} }
+  .case-tag{ font-family:var(--font-mono); font-size:0.72rem; color:var(--teal); letter-spacing:0.05em; margin-bottom:10px; }
+  .case h3{ font-size:1.55rem; margin-bottom:14px; }
+  .case-block{ margin-bottom:20px; }
+  .case-block .bh{ font-size:0.78rem; color:var(--text-faint); font-family:var(--font-mono); margin-bottom:6px; }
+  .case-block p{ font-size:0.95rem; margin-bottom:0.6em; }
+  .case-visual{
+    background:var(--surface); border:1px solid var(--line); border-radius:4px;
+    padding:22px; align-self:start; position:sticky; top:90px;
+  }
+  .case-visual svg{ width:100%; height:auto; }
+  .case-visual .cap{ font-family:var(--font-mono); font-size:0.72rem; color:var(--text-faint); margin-top:12px; }
+  .result-strip{ display:flex; gap:22px; flex-wrap:wrap; margin-top:18px; }
+  .result-chip{ border:1px solid var(--line); border-radius:3px; padding:10px 14px; }
+  .result-chip .v{ font-family:var(--font-mono); color:var(--amber); font-size:1.05rem; display:block; }
+  .result-chip .k{ font-size:0.74rem; color:var(--text-faint); }
+
+  /* smaller work grid */
+  .minor-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:8px; }
+  @media (max-width:720px){ .minor-grid{grid-template-columns:1fr;} }
+  .minor-card{ background:var(--bg); padding:26px; }
+  .minor-card h4{ font-size:1.02rem; margin-bottom:8px; }
+  .minor-card p{ font-size:0.9rem; }
+  .minor-tag{ font-family:var(--font-mono); font-size:0.7rem; color:var(--text-faint); margin-bottom:10px; display:block; }
+
+  /* ============ SKILLS ============ */
+  .skills-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  @media (max-width:820px){ .skills-grid{grid-template-columns:repeat(2,1fr);} }
+  .skill-col{ background:var(--bg); padding:26px; }
+  .skill-col .sc-title{ font-family:var(--font-mono); font-size:0.72rem; color:var(--teal); margin-bottom:14px; letter-spacing:0.04em; }
+  .skill-col ul{ list-style:none; margin:0; padding:0; }
+  .skill-col li{ font-size:0.92rem; color:var(--text); padding:6px 0; border-top:1px solid var(--line-soft); }
+  .skill-col li:first-child{ border-top:none; }
+
+  /* ============ CONTACT ============ */
+  .contact{ border-bottom:none; }
+  .contact-inner{ display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap; }
+  .contact h2{ font-size:2.3rem; max-width:14ch; }
+  .contact-links{ display:flex; flex-direction:column; gap:10px; align-items:flex-end; }
+  @media (max-width:600px){ .contact-links{ align-items:flex-start; } }
+  .contact-links a{ font-family:var(--font-mono); font-size:0.92rem; color:var(--text-dim); border-bottom:1px solid transparent; }
+  .contact-links a:hover{ color:var(--amber); border-color:var(--amber); }
+
+  footer{ padding:26px 0 50px; }
+  footer .wrap{ display:flex; justify-content:space-between; color:var(--text-faint); font-family:var(--font-mono); font-size:0.72rem; flex-wrap:wrap; gap:10px; }
+
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-mark">SIDDH JHAVERI<span class="dot">.</span></div>
+    <nav class="nav-links">
+      <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" style="padding-top:0; border-bottom:none;">
+  <div class="wrap">
+    <div class="hero-grid" style="padding-top:150px;">
+      <div>
+        <div class="eyebrow-field mono">Re/Ds ~ 3.4×10⁵ · steady RANS · frozen rotor</div>
+        <h1>Mechanical engineer,<br>working in <span class="accent">flow.</span></h1>
+        <p class="hero-sub">MS Mechanical Engineering candidate at Ohio State, focused on fluid dynamics and CFD — turbomachinery, structures, and the aircraft and hydro systems in between. Currently looking for full-time engineering roles.</p>
+        <div class="hero-actions">
+          <a href="#work" class="btn btn-primary">See the work</a>
+          <a href="#contact" class="btn btn-ghost">Get in touch</a>
+        </div>
+      </div>
+      <div class="hero-diagram">
+        <svg viewBox="0 0 360 260" xmlns="http://www.w3.org/2000/svg">
+          <!-- airfoil -->
+          <path d="M40,130 C90,95 220,95 320,128 C220,150 90,150 40,130 Z" fill="#16213A" stroke="#26324D"/>
+          <!-- streamlines -->
+          <path class="stream n1" d="M10,70 C120,60 220,60 350,68" />
+          <path class="stream n2" d="M10,100 C130,86 220,150 350,98" />
+          <path class="stream n3" d="M10,160 C130,178 220,180 350,168" />
+          <path class="stream n1" d="M10,200 C130,205 220,205 350,200" />
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="titleblock">
+    <div>
+      <div class="tb-label">DISCIPLINE</div>
+      <div class="tb-val">MECH ENG — FLUIDS / CFD</div>
+    </div>
+    <div>
+      <div class="tb-label">STATUS</div>
+      <div class="tb-val">SEEKING FULL-TIME, 2026–27</div>
+    </div>
+    <div>
+      <div class="tb-label">BASED</div>
+      <div class="tb-val">COLUMBUS, OH</div>
+    </div>
+    <div>
+      <div class="tb-label">REV</div>
+      <div class="tb-val">MS EXPECTED MAY 2027</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <div class="section-head" style="margin-bottom:24px;">
+        <h2>About</h2>
+        <span class="section-num mono">01</span>
+      </div>
+      <p>I'm an MS Mechanical Engineering student at The Ohio State University, finishing a BS in the same program summa cum laude. My work sits mostly in fluid dynamics and CFD — turbomachinery, hydraulic systems, and the aerodynamics of small aircraft — but I've also spent real time in structures, running FEA on everything from turbine impellers to a cantilevered glass skywalk.</p>
+      <p>Most of what's below came out of internships and research, not classroom assignments: designing compressor hardware at Pratt & Whitney, structural work on deployable spacecraft structures at NASA Langley, instrument research at NASA Glenn, and valve design at Curtiss-Wright. I like tools that let me see what's actually happening inside a system — ANSYS CFX, OpenFOAM, TurboGrid — and I'm comfortable moving between open-source and proprietary stacks depending on what the problem needs.</p>
+    </div>
+    <div class="stat-list">
+      <div class="stat">
+        <span class="num mono">3.93</span>
+        <span class="label">GPA, BS Mechanical Engineering (Summa Cum Laude)</span>
+      </div>
+      <div class="stat">
+        <span class="num mono">4</span>
+        <span class="label">Engineering internships — Pratt & Whitney, NASA (x2), Curtiss-Wright</span>
+      </div>
+      <div class="stat">
+        <span class="num mono">33%</span>
+        <span class="label">Hydraulic efficiency reached on a pico-hydro turbine redesign, up from 26%</span>
+      </div>
+      <div class="stat">
+        <span class="num mono">2027</span>
+        <span class="label">Expected MS graduation, The Ohio State University</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Experience</h2>
+      <span class="section-num mono">02</span>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-role">Engineering Intern</div>
+        <div class="tl-org">Pratt &amp; Whitney</div>
+        <div class="tl-meta mono">F135 HIGH-PRESSURE COMPRESSOR TEAM</div>
+        <p>Worked with the F135 high-pressure compressor design team, supporting hardware design work on one of the most widely deployed military turbofan engines in production.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-role">Engineering Intern</div>
+        <div class="tl-org">NASA Langley Research Center</div>
+        <div class="tl-meta mono">STRUCTURAL DYNAMICS — DEPLOYABLE STRUCTURES</div>
+        <p>Supported structural dynamics work on deployable spacecraft structures, at the intersection of mechanism design and structural analysis.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-role">Engineering Intern</div>
+        <div class="tl-org">NASA Glenn Research Center</div>
+        <div class="tl-meta mono">INSTRUMENT RESEARCH</div>
+        <p>Contributed to instrument research work, building the kind of measurement intuition that later fed directly into CFD validation practices.</p>
+      </div>
+      <div class="tl-item">
+        <div class="tl-role">Engineering Intern</div>
+        <div class="tl-org">Curtiss-Wright</div>
+        <div class="tl-meta mono">VALVE DESIGN</div>
+        <p>Worked on valve design, an early hands-on introduction to fluid systems hardware that shaped my later interest in flow and turbomachinery.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORK / CASE STUDIES ============ -->
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Selected work</h2>
+      <span class="section-num mono">03</span>
+    </div>
+
+    <!-- CASE 1: Solar Wing -->
+    <div class="case">
+      <div>
+        <div class="case-tag">CAPSTONE — AEROSPACE / ELECTRICAL</div>
+        <h3>Solar Wing: a solar-augmented UAV for crop monitoring</h3>
+        <div class="case-block">
+          <div class="bh">PROBLEM</div>
+          <p>Agricultural crop monitoring needs long flight endurance, and a battery-only fixed-wing UAV runs out of air time fast. The capstone team set out to extend endurance by integrating solar cells directly into the wing, without redesigning the aircraft from a blank sheet.</p>
+        </div>
+        <div class="case-block">
+          <div class="bh">APPROACH</div>
+          <p>I structured the electrical and aerodynamic sizing as a four-step cascade — Electrical &amp; Propulsion Foundation, Solar Sizing, Wing Integration, Fuselage Synthesis — rather than sizing everything simultaneously, so each decision could be checked before the next depended on it.</p>
+          <p>The motor was selected before final aircraft weight was known, using class-based thrust-to-weight benchmarks of 0.4:1–0.7:1 from market research rather than waiting on a number that wasn't available yet. Battery configuration (4S vs. 6S) was a genuine trade-off between electrical viability range and minimizing the number of solar cells needed. I sized the array from voltage rather than power — power alone doesn't capture series vs. parallel wiring — landing on a 24-cell minimum using a conservative, measured 0.7 V/cell against the pack's max voltage of 16.8 V. That gave a solar output of roughly 6 A against a ~2.17 A discharge requirement, about 3× margin. Cruise velocity of 15 m/s was taken as a class benchmark rather than derived from scratch, and the SD7037 airfoil was selected with polar data bracketed at 5° and 10° angle of attack.</p>
+        </div>
+        <div class="case-block">
+          <div class="bh">RESULTS</div>
+          <p>Flight testing confirmed stable flight, a controlled landing, and solar charging at the expected rate. Telemetry logging fell short of what we wanted, so rather than filling that gap with invented numbers, I reported the results as qualitative confirmation and flagged the missing telemetry as a process failure to fix next time — a decision I stand behind under technical questioning.</p>
+        </div>
+      </div>
+      <div class="case-visual">
+        <svg viewBox="0 0 340 260" xmlns="http://www.w3.org/2000/svg">
+          <line x1="30" y1="230" x2="310" y2="230" stroke="#1B2740" stroke-width="1"/>
+          <!-- fuselage -->
+          <path d="M40,150 C60,140 240,140 300,148 L300,158 C240,152 60,152 40,160 Z" fill="#1B2740" stroke="#26324D"/>
+          <!-- wing with solar hatch -->
+          <rect x="70" y="90" width="200" height="26" rx="2" fill="#101A2E" stroke="#22D9C4"/>
+          <g stroke="#123c38" stroke-width="1">
+            <line x1="90" y1="90" x2="90" y2="116"/>
+            <line x1="110" y1="90" x2="110" y2="116"/>
+            <line x1="130" y1="90" x2="130" y2="116"/>
+            <line x1="150" y1="90" x2="150" y2="116"/>
+            <line x1="170" y1="90" x2="170" y2="116"/>
+            <line x1="190" y1="90" x2="190" y2="116"/>
+            <line x1="210" y1="90" x2="210" y2="116"/>
+            <line x1="230" y1="90" x2="230" y2="116"/>
+            <line x1="250" y1="90" x2="250" y2="116"/>
+          </g>
+          <!-- prop -->
+          <circle cx="35" cy="153" r="10" fill="none" stroke="#FF6A39" stroke-width="1.5"/>
+          <!-- tail -->
+          <path d="M300,150 L326,132 L326,148 Z" fill="#26324D"/>
+          <!-- callouts -->
+          <text x="72" y="82" fill="#5B6A88" font-family="IBM Plex Mono" font-size="9">SOLAR ARRAY — 24 CELLS</text>
+          <text x="20" y="180" fill="#5B6A88" font-family="IBM Plex Mono" font-size="9">MOTOR</text>
+          <text x="280" y="175" fill="#5B6A88" font-family="IBM Plex Mono" font-size="9">TAIL</text>
+        </svg>
+        <div class="cap mono">Fig. 1 — wing-integrated solar array, schematic</div>
+        <div class="result-strip">
+          <div class="result-chip"><span class="v">~3×</span><span class="k">solar current margin</span></div>
+          <div class="result-chip"><span class="v">15 m/s</span><span class="k">cruise velocity</span></div>
+          <div class="result-chip"><span class="v">24</span><span class="k">solar cells, min.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASE 2: Pump-as-Turbine -->
+    <div class="case">
+      <div>
+        <div class="case-tag">HONORS THESIS — HAEG, CFD / TURBOMACHINERY</div>
+        <h3>Turning a $40 pump into a pico-hydro turbine</h3>
+        <div class="case-block">
+          <div class="bh">PROBLEM</div>
+          <p>A UV-C LED water disinfection system needs power, and running a dedicated turbine down to pico scale is expensive. The question behind my honors thesis: could an off-the-shelf Iwaki MD-10 centrifugal pump, run backwards as a turbine with a modified impeller, reach the ≥30% hydraulic efficiency needed to make that work?</p>
+        </div>
+        <div class="case-block">
+          <div class="bh">APPROACH</div>
+          <p>I ran the CFD in ANSYS CFX with TurboGrid meshing, using SST k-ω turbulence and a frozen-rotor interface treatment. The model was anchored against 16 turbine-mode design points pulled from a collaborator's experimental Q–RPM data across two load cases, plus 12 pump-mode points from the manufacturer's own performance curves — so the CFD had real data to validate against in both directions, not just one.</p>
+          <p>Partway through, I corrected an assumption that had been carried from a prior design review — the impeller has 4 blades, not 6 — which meant re-running geometry and mesh work on the corrected model. From there I compared three impeller variants: the original open impeller, a modified impeller with forward-curved blades, and a semi-open variant.</p>
+        </div>
+        <div class="case-block">
+          <div class="bh">RESULTS</div>
+          <p>The original open impeller predicted about 26% hydraulic efficiency at its best turbine-mode point. The forward-curved modification pushed that to roughly 33%, clearing the 30% target the disinfection system needed. The semi-open variant underperformed both, at around 21% — a useful negative result that ruled out that geometry direction.</p>
+        </div>
+      </div>
+      <div class="case-visual">
+        <svg viewBox="0 0 340 260" xmlns="http://www.w3.org/2000/svg">
+          <!-- bar chart -->
+          <line x1="40" y1="210" x2="320" y2="210" stroke="#26324D"/>
+          <line x1="40" y1="30" x2="40" y2="210" stroke="#26324D"/>
+          <!-- threshold line at 30% -->
+          <line x1="40" y1="102" x2="320" y2="102" stroke="#FF6A39" stroke-dasharray="4 4" stroke-width="1"/>
+          <text x="252" y="96" fill="#FF6A39" font-family="IBM Plex Mono" font-size="9">30% TARGET</text>
+          <!-- bars: open 26%, modified 33%, semi 21% -->
+          <rect x="80" y="142" width="46" height="68" fill="#16213A" stroke="#26324D"/>
+          <text x="83" y="134" fill="#8B96AF" font-family="IBM Plex Mono" font-size="10">26%</text>
+          <text x="80" y="228" fill="#5B6A88" font-family="IBM Plex Mono" font-size="8">OPEN</text>
+
+          <rect x="160" y="122" width="46" height="88" fill="#123c38" stroke="#22D9C4"/>
+          <text x="163" y="114" fill="#22D9C4" font-family="IBM Plex Mono" font-size="10">33%</text>
+          <text x="150" y="228" fill="#5B6A88" font-family="IBM Plex Mono" font-size="8">MODIFIED</text>
+
+          <rect x="240" y="156" width="46" height="54" fill="#16213A" stroke="#26324D"/>
+          <text x="243" y="148" fill="#8B96AF" font-family="IBM Plex Mono" font-size="10">21%</text>
+          <text x="228" y="228" fill="#5B6A88" font-family="IBM Plex Mono" font-size="8">SEMI-OPEN</text>
+        </svg>
+        <div class="cap mono">Fig. 2 — predicted hydraulic efficiency by impeller variant, CFX</div>
+        <div class="result-strip">
+          <div class="result-chip"><span class="v">+7 pts</span><span class="k">efficiency gain vs. baseline</span></div>
+          <div class="result-chip"><span class="v">28</span><span class="k">CFD design points</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASE 3: Skywalk FEA -->
+    <div class="case">
+      <div>
+        <div class="case-tag">SEMESTER PROJECT — STRUCTURAL FEA</div>
+        <h3>Verifying the Grand Canyon Skywalk, in ANSYS</h3>
+        <div class="case-block">
+          <div class="bh">PROBLEM</div>
+          <p>A cantilevered, glass-bottomed observation deck extending 70 feet over the Grand Canyon is exactly the kind of structure where an FEA course wants you to prove you understand what you're claiming, not just get a number out of a solver. The project: model the Skywalk's structure and verify it holds up under service, wind, and thermal loading.</p>
+        </div>
+        <div class="case-block">
+          <div class="bh">APPROACH</div>
+          <p>I built the cantilevering steel structure in SolidWorks — hollow box beams, square cross-members, a swept horseshoe tip — and the glass deck panel as a separate body, then brought the assembly into ANSYS Mechanical with SHELL181 elements throughout. Steel was modeled as A572 Grade 50, glass as tempered laminate.</p>
+          <p>The interesting decision was the glass-to-steel interface: an early bonded-contact model produced unrealistic stress islands at the connection. Switching to frictional contact (μ = 0.15) to represent the actual neoprene gasket resolved that and gave results I could defend. I then ran gravity plus live load (100 lb/ft²), a wind load case (0.178 psi), and four thermal cases from −7°C to 49°C — each rerun with gravity and live load included, since thermal effects don't act in isolation on a real structure.</p>
+        </div>
+        <div class="case-block">
+          <div class="bh">RESULTS</div>
+          <p>Baseline tip deflection came out to about 1.8 in, ranging from 1.68 in at the hottest thermal case to 2.04 in at the coldest — thermal expansion measurably stiffens or relaxes the deflection. Peak von Mises stress was about 10,000 psi against a 345 MPa yield, and glass stress reached about 2,500 psi against a 17,400 psi tensile limit — both well inside margin. Wind load turned out to be a non-factor. A hand calculation predicting roughly 1.17 in of gravity-only deflection served as a sanity check against the full FEA model; I treated the gap between the two as an expected, explainable difference in scope rather than an error to chase down, and excluded the stress singularities at the fixed boundary from any engineering conclusion, per St. Venant's principle.</p>
+        </div>
+      </div>
+      <div class="case-visual">
+        <svg viewBox="0 0 340 260" xmlns="http://www.w3.org/2000/svg">
+          <!-- canyon wall -->
+          <rect x="20" y="40" width="34" height="180" fill="#16213A" stroke="#26324D"/>
+          <g stroke="#26324D" stroke-width="1">
+            <line x1="20" y1="60" x2="54" y2="60"/>
+            <line x1="20" y1="90" x2="54" y2="90"/>
+            <line x1="20" y1="120" x2="54" y2="120"/>
+            <line x1="20" y1="150" x2="54" y2="150"/>
+            <line x1="20" y1="180" x2="54" y2="180"/>
+          </g>
+          <!-- undeformed beam -->
+          <line x1="54" y1="120" x2="300" y2="120" stroke="#26324D" stroke-width="2"/>
+          <!-- deflected shape -->
+          <path d="M54,120 C160,120 260,128 300,150" fill="none" stroke="#22D9C4" stroke-width="2"/>
+          <!-- glass deck -->
+          <rect x="180" y="128" width="90" height="10" fill="#101A2E" stroke="#22D9C4" opacity="0.7"/>
+          <!-- load arrows -->
+          <g stroke="#FF6A39" stroke-width="1.5">
+            <line x1="150" y1="95" x2="150" y2="118"/>
+            <line x1="150" y1="118" x2="145" y2="111"/>
+            <line x1="150" y1="118" x2="155" y2="111"/>
+            <line x1="220" y1="95" x2="220" y2="126"/>
+            <line x1="220" y1="126" x2="215" y2="119"/>
+            <line x1="220" y1="126" x2="225" y2="119"/>
+          </g>
+          <text x="60" y="220" fill="#5B6A88" font-family="IBM Plex Mono" font-size="9">FIXED SUPPORT</text>
+          <text x="230" y="170" fill="#22D9C4" font-family="IBM Plex Mono" font-size="9">TIP: 1.8 in</text>
+        </svg>
+        <div class="cap mono">Fig. 3 — cantilever deflection under gravity + live load (exaggerated)</div>
+        <div class="result-strip">
+          <div class="result-chip"><span class="v">1.8 in</span><span class="k">baseline tip deflection</span></div>
+          <div class="result-chip"><span class="v">10 ksi</span><span class="k">peak von Mises stress</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- minor work -->
+    <div style="margin-top:20px;">
+      <div class="bh mono" style="color:var(--text-faint); margin-bottom:14px;">ALSO ON THE BENCH</div>
+      <div class="minor-grid">
+        <div class="minor-card">
+          <span class="minor-tag">CFD / OPEN-SOURCE</span>
+          <h4>OpenFOAM automation suite</h4>
+          <p>An internal tooling project to automate recurring OpenFOAM flow-simulation workflows, reducing repetitive setup for CFD runs.</p>
+        </div>
+        <div class="minor-card">
+          <span class="minor-tag">CFD / TURBOMACHINERY</span>
+          <h4>Extended pump-as-turbine investigation</h4>
+          <p>A follow-on steady-state RANS study on PaT systems, including mesh sensitivity analysis around the volute tongue and leading-edge rounding effects, validated against manufacturer curves.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Tools &amp; methods</h2>
+      <span class="section-num mono">04</span>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-col">
+        <div class="sc-title">SIMULATION / CFD</div>
+        <ul>
+          <li>ANSYS CFX</li>
+          <li>ANSYS Fluent</li>
+          <li>ANSYS Mechanical</li>
+          <li>OpenFOAM</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <div class="sc-title">MESHING</div>
+        <ul>
+          <li>TurboGrid</li>
+          <li>ICEM CFD</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <div class="sc-title">CAD &amp; ANALYSIS</div>
+        <ul>
+          <li>SolidWorks</li>
+          <li>MATLAB</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <div class="sc-title">PROGRAMMING</div>
+        <ul>
+          <li>Python</li>
+          <li>Linux</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="contact">
+  <div class="wrap contact-inner">
+    <h2>Let's talk about an opening.</h2>
+    <div class="contact-links">
+      <!-- TODO: replace with your real email, LinkedIn, and resume file -->
+      <a href="mailto:youremail@example.com">youremail@example.com</a>
+      <a href="https://linkedin.com/in/your-handle" target="_blank" rel="noopener">linkedin.com/in/your-handle</a>
+      <a href="resume.pdf" target="_blank" rel="noopener">Download résumé (PDF)</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Siddh Jhaveri</span>
+    <span>Columbus, OH · Ohio State University</span>
+  </div>
+</footer>
+
+</body>
+</html>
